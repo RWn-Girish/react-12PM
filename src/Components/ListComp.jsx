@@ -11,6 +11,7 @@ const ListComp = () => {
   }
   return (
     <>
+    
       {/* <h2>Static List</h2>
             <li>{items[0]}</li>
             <li>{items[1]}</li>

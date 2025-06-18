@@ -46,6 +46,8 @@ const Counter = ({ name }) => {
 
   return (
     <div>
+      
+
       {/* {count >= 10 && name ? (
         <h2 onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           {name}
