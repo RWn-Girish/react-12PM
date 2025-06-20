@@ -6,12 +6,18 @@ import Controlled from "./Components/Controlled";
 import Uncontrolled from "./Components/Uncontrolled";
 import ValidationForm from "./Components/ValidationForm";
 import HocComp from "./Components/HoCComp";
-import { Link, Route, Routes } from "react-router";
+import { Link, Route, Routes, useNavigate } from "react-router";
 
 const ValidationHOC = HocComp(ValidationForm);
 
 function App() {
   let [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    let name = "Hello"
+      navigate(`/list/${name}`)
+  }
 
   useEffect(()=> {
     setTimeout(()=> {
@@ -27,12 +33,13 @@ function App() {
     <ValidationForm />
     <ValidationHOC isLoading={isLoading} /> */}
     <h1>Header Department</h1>
-    <Link to={"/"}>Home</Link> &nbsp;&nbsp;&nbsp;&nbsp;
-      <Link to={"/list"}>List</Link> &nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to={"/"}>Home</Link> &nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to={"/list/Smith Peter"}>List</Link> &nbsp;&nbsp;&nbsp;&nbsp;
       <Link to={"/controlled"}>Controlled</Link> &nbsp;&nbsp;&nbsp;&nbsp;
+      <button onClick={handleClick}>List Comp</button>
     <Routes>
       <Route path="/" element={<Counter name="Girish Gondaliya" />} />
-      <Route path="/list" element={<ListComp />} />
+      <Route path="/list/:name" element={<ListComp />} />
       <Route path="/controlled" element={<Controlled />} />
       <Route path="/*" element={<h1>Not Found</h1>} />
     </Routes>
