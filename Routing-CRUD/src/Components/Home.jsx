@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { getStorageData } from "../Services/localSotrageData";
+import { getStorageData, setStorageData } from "../Services/localSotrageData";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+    const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
     const handleEdit = (id) => {
-        
+        navigate(`/edit-employee/${id}`)
     }
     const handleDelete = (id) => {
-
+        let filterData = employees.filter(emp => emp.id != id);
+        setStorageData(filterData);
+        setEmployees(filterData);
     }
 
     useEffect(()=> {
