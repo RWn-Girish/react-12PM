@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 const Home = () => {
     const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
+    const [searchVal, setSearchVal] = useState("");
     const handleEdit = (id) => {
         navigate(`/edit-employee/${id}`)
     }
@@ -15,6 +16,19 @@ const Home = () => {
         setEmployees(filterData);
     }
 
+    const handleSearch = () => {
+        let searchData = employees.filter(emp => {
+            return emp.fname == searchVal || emp.gender == searchVal
+        })
+        // console.log(searchData);
+        setEmployees(searchData);
+        setSearchVal("");
+    }
+    const handleClear = () => {
+        let data = getStorageData();
+        setEmployees(data);
+    }
+
     useEffect(()=> {
         let data = getStorageData(); 
         setEmployees(data)
@@ -22,6 +36,11 @@ const Home = () => {
     return (
         <>
             <h1 className="mt-3">Employees Detatils</h1>
+            <div>
+                <input type="text" name="search" value={searchVal} onChange={(e) => setSearchVal(e.target.value)} />
+                <Button className="m-2" onClick={handleSearch} >Search</Button>
+                <Button className="m-2" onClick={handleClear} >Clear</Button>
+            </div>
             <Table>
                 <thead>
                     <tr>
