@@ -29,6 +29,39 @@ const Home = () => {
         setEmployees(data);
     }
 
+    const handleSort = (field, type) => {
+        let sData = getStorageData();
+        let data;
+        if(type == 'asc'){
+            data = sData.sort((a ,b) => {
+            return a[field].localeCompare(b[field])
+        })
+        }else{
+           data = sData.sort((a ,b) => {
+            return b[field].localeCompare(a[field])
+        }) 
+        }
+        setEmployees(data);
+    }
+
+    // const handleASC = () => {
+    //     let sData = getStorageData();
+    //     let data = sData.sort((a ,b) => {
+    //         return a.fname.localeCompare(b.fname)
+    //     })
+
+    //     setEmployees(data);
+    // }
+    
+    // const handleDESC = () => {
+    //     let sData = getStorageData();
+    //     let data = sData.sort((a ,b) => {
+    //         return b.fname.localeCompare(a.fname)
+    //     })
+    //     setEmployees(data); 
+    // }
+
+    // console.log("Emp ===> ", employees);
     useEffect(()=> {
         let data = getStorageData(); 
         setEmployees(data)
@@ -41,13 +74,17 @@ const Home = () => {
                 <Button className="m-2" onClick={handleSearch} >Search</Button>
                 <Button className="m-2" onClick={handleClear} >Clear</Button>
             </div>
+            {/* <div>
+                <Button onClick={handleASC} className="m-2">A-Z</Button>
+                <Button onClick={handleDESC}  className="m-2">Z-A</Button>
+            </div> */}
             <Table>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Gender</th>
+                        <th>Full Name <Button onClick={()=> handleSort('fname', 'asc')} className="m-2" variant="warning">⬆</Button> <Button onClick={()=> handleSort('fname', 'desc')} className="m-2" variant="info">⬇</Button></th>
+                        <th>Email <Button onClick={()=> handleSort('email', 'asc')} className="m-2" variant="warning">⬆</Button> <Button onClick={()=> handleSort('email', 'desc')} className="m-2" variant="info">⬇</Button></th>
+                        <th>Gender <Button onClick={()=> handleSort('gender', 'asc')} className="m-2" variant="warning">⬆</Button> <Button onClick={()=> handleSort('gender', 'desc')} className="m-2" variant="info">⬇</Button></th>
                         <th>Mobile No</th>
                         <th>Role</th>
                         <th colSpan={2}>Actions</th>
