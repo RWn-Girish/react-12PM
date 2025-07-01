@@ -7,6 +7,7 @@ import Uncontrolled from "./Components/Uncontrolled";
 import ValidationForm from "./Components/ValidationForm";
 import HocComp from "./Components/HoCComp";
 import { Link, Route, Routes, useNavigate } from "react-router";
+import CounterComp from "./Components/UseCallback/CounterComp";
 
 const ValidationHOC = HocComp(ValidationForm);
 
@@ -38,7 +39,8 @@ function App() {
       <Link to={"/controlled"}>Controlled</Link> &nbsp;&nbsp;&nbsp;&nbsp;
       <button onClick={handleClick}>List Comp</button>
     <Routes>
-      <Route path="/" element={<Counter name="Girish Gondaliya" />} />
+      <Route path="/" element={<CounterComp />} />
+      {/* <Route path="/" element={<Counter name="Girish Gondaliya" />} /> */}
       <Route path="/list/:name" element={<ListComp />} />
       <Route path="/controlled" element={<Controlled />} />
       <Route path="/*" element={<h1>Not Found</h1>} />
