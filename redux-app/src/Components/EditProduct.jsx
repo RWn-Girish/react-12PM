@@ -1,11 +1,11 @@
-import generateUniqueId from "generate-unique-id";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../Services/actions/productAction";
-import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleProduct, updateProduct } from "../Services/actions/productAction";
+import { useNavigate, useParams } from "react-router";
 
-const AddProduct = () => {
+const EditProduct = () => {
+  const {id} = useParams();
   const intialState = {
     id: "",
     title: "",
@@ -17,6 +17,7 @@ const AddProduct = () => {
   const [inputForm, setInputForm] = useState(intialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {product} = useSelector(state => state.productReducer)
 
   const handleChanged = (e) => {
     const { name, value } = e.target;
@@ -28,15 +29,23 @@ const AddProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let id = generateUniqueId({ length: 6, useLetters: false });
-    inputForm.id = id;
-    dispatch(addProduct(inputForm))
+    
+    dispatch(updateProduct(inputForm))
     setInputForm(intialState);
     navigate("/")
   };
+
+  useEffect(()=> {
+    if(product)
+        setInputForm(product)
+  }, [product]);
+
+  useEffect(()=> {
+        dispatch(getSingleProduct(id))
+  }, [id]);
   return (
     <>
-      <h1>Add Product Page</h1>
+      <h1>Edit Product Page</h1>
       <Form className="mt-4" onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
@@ -90,10 +99,10 @@ const AddProduct = () => {
           <Col sm="9">
             <Form.Select name="category" onChange={handleChanged}>
               <option>Select Category</option>
-              <option value="Electronics">Electronics</option>
-              <option value="Fashion">Fashion</option>
-              <option value="Mobiles">Mobiles</option>
-              <option value="Home Appliances">Home Appliances</option>
+              <option value="Electronics" selected={inputForm.category == "Electronics"}>Electronics</option>
+              <option value="Fashion" selected={inputForm.category == "Fashion"}>Fashion</option>
+              <option value="Mobiles" selected={inputForm.category == "Mobiles"}>Mobiles</option>
+              <option value="Home Appliances" selected={inputForm.category == "Home Appliances"}>Home Appliances</option>
             </Form.Select>
           </Col>
         </Form.Group>
@@ -113,10 +122,10 @@ const AddProduct = () => {
           </Col>
         </Form.Group>
 
-        <Button type="submit">Add Product</Button>
+        <Button type="submit">Update Product</Button>
       </Form>
     </>
   );
 };
 
-export default AddProduct;
+export default EditProduct;
