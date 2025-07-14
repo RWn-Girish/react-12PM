@@ -31,3 +31,23 @@ export const updateProduct = (data) => {
         payload: data
     }
 }
+
+export const loading = () => {
+    return {
+        type: "LOADING",
+    }
+}
+
+
+
+// Async Action
+
+export const getAllProductsAsync = () => {
+    return (dispatch) => {
+        dispatch(loading());
+
+        setTimeout(()=> {
+            dispatch(getAllProducts())
+        }, 5000);
+    }   
+}

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router";
 import {
   deleteProduct,
   getAllProducts,
+  getAllProductsAsync,
+  loading,
 } from "../Services/actions/productAction";
 
 const Home = () => {
-  const { products } = useSelector((state) => state.productReducer);
+  const { products, isLoading } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,12 +22,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProductsAsync());
   }, []);
 
   return (
     <>
       <h1>Home Page</h1>
+      {isLoading ? <h1>Loading....</h1> :
       <Container className="d-flex">
         {products.length == 0 ? (
           <h1>No Products Found...</h1>
@@ -54,6 +57,7 @@ const Home = () => {
           ))
         )}
       </Container>
+      }
     </>
   );
 };
