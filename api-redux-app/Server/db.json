@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "id": "067765",
+      "title": "i-Phone 16 Pro",
+      "desc": "Smart Mobile Phone",
+      "price": "150",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRcpcIK6oV67y7-KtU8mIwkX6wJgaN6GCLuvL9Yo8jAU1Osazc7kgxJDLMl_RqbGI6-YS_CEGQycroOtpPiW-EKg3h9j13_-Itv8YUN6j9Y49xxT8Dv_OieXtCx_Ld11N7IS8XOpQ&usqp=CAc",
+      "category": "Mobiles"
+    },
+    {
+      "id": "411895",
+      "title": "Men's T-shirt",
+      "desc": "huhuhuhuhu",
+      "price": "5000",
+      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSYdlHZBdJMr8IX_KVzMYZwHh9wKmH3vlLmpKVw37H73b0vJYR_6gJT7qXcoWAsKmoIwrOUsMRKs7qphwOnzHV0WUAaD_asvwgG_pTaQeE",
+      "category": "Fashion"
+    }
+  ]
+}
