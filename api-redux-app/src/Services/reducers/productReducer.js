@@ -3,6 +3,7 @@ const intialState = {
     product: null,
     isLoading: false,
     isCreate: false,
+    isUpdate: false,
     errMSG: ""
 }
 
@@ -31,40 +32,30 @@ const productReducer = (state = intialState, action) => {
                     products: action.payload,
                     isLoading: false,
                     isCreate: false,
+                    isUpdate: false,
                     errMSG: ""
                 }
             
-            case "DELETE_PRODUCT":
-                let getdata = JSON.parse(localStorage.getItem("Products"))
-                let updateData = getdata.filter(pro => pro.id != action.payload)
-                localStorage.setItem("Products", JSON.stringify(updateData));
-                return {
-                    ...state,
-                    products: updateData
-                }
+            // case "DELETE_PRODUCT":
+            //     let getdata = JSON.parse(localStorage.getItem("Products"))
+            //     let updateData = getdata.filter(pro => pro.id != action.payload)
+            //     localStorage.setItem("Products", JSON.stringify(updateData));
+            //     return {
+            //         ...state,
+            //         products: updateData
+            //     }
 
             case "GET_SINGLE_PRODUCT":
-                let alldata = JSON.parse(localStorage.getItem("Products"))
-                let singleRec = alldata.find(pro => pro.id == action.payload)
                 return {
                     ...state,
-                    product: singleRec
+                    product: action.payload
                 }
             
             case "UPDATE_PRODUCT":
-                let allData = JSON.parse(localStorage.getItem("Products"))
-                let updatedData = allData.map(pro => {
-                    if(pro.id == action.payload.id){
-                        return action.payload
-                    }else{
-                        return pro
-                    }
-                })
-                localStorage.setItem("Products", JSON.stringify(updatedData));
                 return {
                     ...state,
                     product: null,
-                    products: updatedData
+                    isUpdate: true
                 }
             default:
                 return state;

@@ -20,17 +20,16 @@ export const deleteProduct = (id) => {
     }
 }
 
-export const getSingleProduct = (id) => {
+export const getSingleProduct = (data) => {
     return {
         type: "GET_SINGLE_PRODUCT",
-        payload: id
+        payload: data
     }
 }
 
-export const updateProduct = (data) => {
+export const updateProduct = () => {
     return {
         type: "UPDATE_PRODUCT",
-        payload: data
     }
 }
 
@@ -76,5 +75,44 @@ export const AddProductsAsync = (data) => {
             dispatch(errorMessage(error.message))
         }
         
+    }   
+}
+
+export const deleteProductAsync = (id) => {
+    return async (dispatch) => {
+        dispatch(loading());
+        try {
+            await axios.delete(`http://localhost:3000/products/${id}`)
+            dispatch(getAllProductsAsync())
+        } catch (error) {
+            console.log(error)
+            dispatch(errorMessage(error.message))
+        }       
+    }   
+}
+
+export const getSingleProductAsync = (id) => {
+    return async (dispatch) => {
+        dispatch(loading());
+        try {
+            let res = await axios.get(`http://localhost:3000/products/${id}`)
+            dispatch(getSingleProduct(res.data))
+        } catch (error) {
+            console.log(error)
+            dispatch(errorMessage(error.message))
+        }      
+    }   
+}
+
+export const updateProductAsync = (data) => {
+    return async (dispatch) => {
+        dispatch(loading());
+        try {
+            await axios.put(`http://localhost:3000/products/${data.id}`, data)
+            dispatch(updateProduct())
+        } catch (error) {
+            console.log(error)
+            dispatch(errorMessage(error.message))
+        }        
     }   
 }

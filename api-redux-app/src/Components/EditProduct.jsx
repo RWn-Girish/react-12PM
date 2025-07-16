@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleProduct, updateProduct } from "../Services/actions/productAction";
+import { getSingleProduct, getSingleProductAsync, updateProduct, updateProductAsync } from "../Services/actions/productAction";
 import { useNavigate, useParams } from "react-router";
 
 const EditProduct = () => {
@@ -17,7 +17,7 @@ const EditProduct = () => {
   const [inputForm, setInputForm] = useState(intialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {product} = useSelector(state => state.productReducer)
+  const {product, isUpdate, errMSG} = useSelector(state => state.productReducer)
 
   const handleChanged = (e) => {
     const { name, value } = e.target;
@@ -30,9 +30,8 @@ const EditProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    dispatch(updateProduct(inputForm))
+    dispatch(updateProductAsync(inputForm))
     setInputForm(intialState);
-    navigate("/")
   };
 
   useEffect(()=> {
@@ -41,8 +40,13 @@ const EditProduct = () => {
   }, [product]);
 
   useEffect(()=> {
-        dispatch(getSingleProduct(id))
+        dispatch(getSingleProductAsync(id))
   }, [id]);
+
+  useEffect(()=> {
+    if(isUpdate)
+      navigate("/")
+  },[isUpdate]);
   return (
     <>
       <h1>Edit Product Page</h1>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
   deleteProduct,
+  deleteProductAsync,
   getAllProducts,
   getAllProductsAsync,
   loading,
@@ -18,7 +19,7 @@ const Home = () => {
     navigate(`/edit-product/${id}`);
   };
   const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(deleteProductAsync(id));
   };
 
   useEffect(() => {
