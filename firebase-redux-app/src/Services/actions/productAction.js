@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../config/firebaseConfig';
 
 export const addProduct = () => {
@@ -88,7 +88,8 @@ export const deleteProductAsync = (id) => {
     return async (dispatch) => {
         dispatch(loading());
         try {
-            await axios.delete(`http://localhost:3000/products/${id}`)
+            // await axios.delete(`http://localhost:3000/products/${id}`)
+            await deleteDoc(doc(db, "products", id))
             dispatch(getAllProductsAsync())
         } catch (error) {
             console.log(error)
@@ -101,8 +102,10 @@ export const getSingleProductAsync = (id) => {
     return async (dispatch) => {
         dispatch(loading());
         try {
-            let res = await axios.get(`http://localhost:3000/products/${id}`)
-            dispatch(getSingleProduct(res.data))
+            // let res = await axios.get(`http://localhost:3000/products/${id}`)
+            let res = await getDoc(doc(db, "products", id))
+            if(res.data())
+                dispatch(getSingleProduct(res.data()))
         } catch (error) {
             console.log(error)
             dispatch(errorMessage(error.message))
@@ -114,7 +117,8 @@ export const updateProductAsync = (data) => {
     return async (dispatch) => {
         dispatch(loading());
         try {
-            await axios.put(`http://localhost:3000/products/${data.id}`, data)
+            // await axios.put(`http://localhost:3000/products/${data.id}`, data)
+            await updateDoc(doc(db, "products", data.id), data);
             dispatch(updateProduct())
         } catch (error) {
             console.log(error)
