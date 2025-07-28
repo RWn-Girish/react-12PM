@@ -11,6 +11,7 @@ import {
 } from "../Services/actions/productAction";
 
 const Home = () => {
+  const {user} = useSelector(state => state.userReducer);
   const { products, isLoading, errMSG } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +26,11 @@ const Home = () => {
   useEffect(() => {
     dispatch(getAllProductsAsync());
   }, []);
+  useEffect(()=> {
+    if(!user){
+      navigate("/signIn");
+    }
+  }, [user]);
 
   return (
     <>

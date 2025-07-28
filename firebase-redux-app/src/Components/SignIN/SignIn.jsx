@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { signInAsync } from "../../Services/actions/userAction";
+import { signInAsync, signINWithGoogleAsync } from "../../Services/actions/userAction";
 
 const SignIN = () => {
   const { user, errMSG } = useSelector((state) => state.userReducer);
@@ -26,6 +26,9 @@ const SignIN = () => {
     dispatch(signInAsync(inputForm));
   };
 
+  const hanldeSignInGoogle = () => {
+    dispatch(signINWithGoogleAsync())
+  }
   useEffect(() => {
     if (user) navigate("/");
   }, [user]);
@@ -65,6 +68,8 @@ const SignIN = () => {
 
         <Button type="submit">SignIn</Button>
       </Form>
+      <br/>
+        <Button onClick={hanldeSignInGoogle} variant="danger">SignIN With Google </Button>
       <p>
         Create a New Account? <Link to={"/signUp"}>SignUp</Link>
       </p>
