@@ -2,12 +2,10 @@ import { useEffect } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from 'react-toastify';
 import {
-  deleteProduct,
   deleteProductAsync,
-  getAllProducts,
   getAllProductsAsync,
-  loading,
 } from "../Services/actions/productAction";
 
 const Home = () => {
@@ -21,10 +19,12 @@ const Home = () => {
   };
   const handleDelete = (id) => {
     dispatch(deleteProductAsync(id));
+    toast.success('Product Delete Success');
   };
 
   useEffect(() => {
     dispatch(getAllProductsAsync());
+    toast.success('All Products Get Success');
   }, []);
   useEffect(()=> {
     if(!user){
@@ -35,6 +35,7 @@ const Home = () => {
   return (
     <>
       <h1>Home Page</h1>
+      <ToastContainer newestOnTop={true} />
       {errMSG? <p>{errMSG}</p> : ""}
       {isLoading ? <h1>Loading....</h1> :
       <Container className="d-flex">

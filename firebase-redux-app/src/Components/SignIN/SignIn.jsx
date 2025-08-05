@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { signInAsync, signINWithGoogleAsync } from "../../Services/actions/userAction";
+import { toast, ToastContainer } from "react-toastify";
 
 const SignIN = () => {
   const { user, errMSG } = useSelector((state) => state.userReducer);
@@ -30,11 +31,17 @@ const SignIN = () => {
     dispatch(signINWithGoogleAsync())
   }
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) {
+      toast.success("Login Success");
+      setTimeout(()=> {
+        navigate("/")
+      }, 1500);
+    };
   }, [user]);
   return (
     <>
       <h1>Sign IN Now</h1>
+      <ToastContainer />
       <Form className="mt-4" onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="3">
